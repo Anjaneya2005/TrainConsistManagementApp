@@ -1,7 +1,9 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class TrainConsistManagement {
+public class UC8 {
 
+    // Bogie class
     static class Bogie {
         String name;
         int capacity;
@@ -12,22 +14,25 @@ public class TrainConsistManagement {
         }
     }
 
-    public static List<Bogie> sortBogies(List<Bogie> bogies) {
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
-        return bogies;
+    // Filtering using Streams (UC8)
+    public static List<Bogie> filterBogies(List<Bogie> bogies, int threshold) {
+        return bogies.stream()
+                .filter(b -> b.capacity > threshold)
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
+
         List<Bogie> bogies = new ArrayList<>();
 
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
 
-        sortBogies(bogies);
+        List<Bogie> filtered = filterBogies(bogies, 60);
 
-        System.out.println("Sorted Bogies:");
-        for (Bogie b : bogies) {
+        System.out.println("Filtered Bogies (capacity > 60):");
+        for (Bogie b : filtered) {
             System.out.println(b.name + " - " + b.capacity);
         }
     }
